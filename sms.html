@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>短信生成器</title>
+    <link rel="stylesheet" href="assets/css/sms.css">
+    <script src="//at.alicdn.com/t/c/font_4701542_ryujb3jge4.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>短信生成器</h1>
+        <p class="description">快速生成快递签收短信，方便您进行各种模拟测试。请填写以下信息：</p>
+        <input type="text" id="phoneNumber" placeholder="对方手机号">
+        <input type="text" id="packageNumber" placeholder="快递包裹号">
+        <select id="courierCompany">
+            <option value="邮政快递">邮政快递</option>
+            <option value="顺丰速运">顺丰速运</option>
+            <option value="京东快递">京东快递</option>
+            <option value="中通快递">中通快递</option>
+            <option value="圆通速递">圆通速递</option>
+            <option value="韵达快递">韵达快递</option>
+            <option value="申通快递">申通快递</option>
+            <option value="德邦快递">德邦快递</option>
+        </select>
+        <select id="proofType">
+            <option value="签收证明">签收证明</option>
+            <option value="外包装完好证明">外包装完好证明</option>
+        </select>
+        <button onclick="generateMessage()">生成短信</button>
+    </div>
+    <div id="chatContainer" class="chat-container" style="display: none;">
+        <div class="status-bar">
+            <div class="status-left">
+                <span id="statusBarTime" class="time"></span>
+                <svg class="icon icon-wangyiyunyinle" aria-hidden="true"><use xlink:href="#icon-wangyiyunyinle"></use></svg>
+                <svg class="icon icon-xinxifill" aria-hidden="true"><use xlink:href="#icon-xinxifill"></use></svg>
+            </div>
+            <div class="status-right">
+                <svg class="icon icon-naozhong" aria-hidden="true"><use xlink:href="#icon-naozhong"></use></svg>
+                <svg class="icon icon-hd" aria-hidden="true"><use xlink:href="#icon-hd"></use></svg>
+                <svg class="icon icon-4g" aria-hidden="true"><use xlink:href="#icon-a-4Gxinhao-5-copy-copy"></use></svg>
+                <svg class="icon icon-signal" aria-hidden="true"><use xlink:href="#icon-a-4Gxinhao-5-copy-copy"></use></svg>
+                <svg class="icon icon-wifi" aria-hidden="true"><use xlink:href="#icon-wifi"></use></svg>
+                <svg class="icon icon-battery" aria-hidden="true"><use xlink:href="#icon-dianchidianliang"></use></svg>
+            </div>
+        </div>
+        <div class="chat-header">
+            <svg class="icon icon-fanhui1" aria-hidden="true">
+                <use xlink:href="#icon-fanhui1"></use>
+            </svg>
+            <span id="headerPhoneNumber" class="header-phone-number"></span>
+            <div class="header-icons">
+                <svg class="icon icon-dianhua" aria-hidden="true">
+                    <use xlink:href="#icon-dianhua"></use>
+                </svg>
+                <svg class="icon icon-xuanxiang" aria-hidden="true">
+                    <use xlink:href="#icon-xuanxiang"></use>
+                </svg>
+            </div>
+        </div>
+        <div id="chatMessages" class="chat-messages"></div>
+        <div class="chat-input-container">
+            <div class="bottom-icon">
+                <svg class="icon-add" aria-hidden="true">
+                    <use xlink:href="#icon-add"></use>
+                </svg>
+            </div>
+            <div class="bottom-icon">
+                <svg class="icon-sim1" aria-hidden="true">
+                    <use xlink:href="#icon-sim1"></use>
+                </svg>
+            </div>
+            <textarea class="message-input" placeholder="输入消息..."></textarea>
+            <div class="bottom-icon">
+                <svg class="icon-emoji" aria-hidden="true">
+                    <use xlink:href="#icon-emoji"></use>
+                </svg>
+            </div>
+            <div class="bottom-icon">
+                <svg class="icon-mic" aria-hidden="true">
+                    <use xlink:href="#icon-mic"></use>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/sms.js"></script>
+</body>
+</html> 

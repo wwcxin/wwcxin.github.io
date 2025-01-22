@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条形码生成器</title>
+    <link rel="stylesheet" href="assets/css/barcode.css">
+    <!-- 引入条形码生成库 -->
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>条形码生成器</h1>
+        <p class="description">输入文本生成条形码，每行或每个逗号分隔的项目将生成一个独立的条形码。</p>
+        <textarea id="inputText" placeholder="输入条形码内容，每行一个或用英文逗号分隔"></textarea>
+        <div class="button-group">
+            <button class="copy-btn" onclick="copyToClipboard()">粘贴</button>
+            <button class="generate-btn" onclick="generateBarcodes()">生成条形码</button>
+            <button class="clear-btn" onclick="clearAll()">清空内容</button>
+        </div>
+        <div id="barcodeResult"></div>
+    </div>
+
+    <script src="assets/js/barcode.js"></script>
+</body>
+</html> 
