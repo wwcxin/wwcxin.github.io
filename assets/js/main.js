@@ -85,4 +85,29 @@ document.addEventListener('DOMContentLoaded', function() {
             setTheme(e.matches ? 'dark' : 'light', true);
         }
     });
+
+    // 添加移动端视口高度处理函数
+    function handleMobileViewport() {
+        // 添加视口高度处理
+        const setVH = () => {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        };
+
+        // 初始设置
+        setVH();
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', () => {
+            setVH();
+        });
+
+        // 监听设备方向变化
+        window.addEventListener('orientationchange', () => {
+            setVH();
+        });
+    }
+
+    // 在文档加载完成后执行
+    handleMobileViewport();
 }); 

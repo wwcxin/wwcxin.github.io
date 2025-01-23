@@ -20,6 +20,13 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
+    
+    @media screen and (max-width: 768px) {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
 }
 
 .video-background video {
@@ -38,6 +45,13 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    
+    @media screen and (max-width: 768px) {
+        padding: 10px;
+        align-items: flex-start;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
 }
 
 /* 主容器样式 */
@@ -50,9 +64,17 @@ body {
     position: relative;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-    aspect-ratio: 16/9; /* 直接在主容器上设置比例 */
+    aspect-ratio: 16/9; /* 移除固定宽高比 */
     transition: background-color var(--transition-duration) ease,
                 box-shadow var(--transition-duration) ease;
+    
+    @media screen and (max-width: 768px) {
+        width: 95%;
+        aspect-ratio: auto;
+        min-height: calc(var(--vh, 1vh) * 85); /* 使用自定义视口高度 */
+        max-height: calc(var(--vh, 1vh) * 95);
+        margin: 10px auto;
+    }
 }
 
 /* 移除之前的比例维持伪元素 */
@@ -69,6 +91,12 @@ body {
     bottom: 0;
     display: flex;
     z-index: 2; /* 确保内容在最上层 */
+    
+    @media screen and (max-width: 768px) {
+        height: auto;
+        padding: 15px;
+        overflow-y: auto;
+    }
 }
 
 /* 图片容器样式 */
@@ -217,6 +245,7 @@ html[data-theme="light"] .image-container::after {
 /* 添加全局过渡效果 */
 :root {
     --transition-duration: 0.6s;
+    --vh: 1vh;
 }
 
 /* 个人信息容器样式 */
