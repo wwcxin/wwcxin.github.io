@@ -265,7 +265,7 @@ html[data-theme="light"] .image-container::after {
 .name {
     font-size: 32px;
     font-weight: 600;
-    color: #8bf362; /* 使用亮紫色 */
+    color: #62c5f3; /* 使用亮紫色 */
     margin-bottom: 12px;
     transition: color var(--transition-duration) ease;
 }
@@ -336,7 +336,7 @@ html[data-theme="light"] .image-container::after {
 
 /* 浅色主题适配 */
 html[data-theme="light"] .name {
-    color: #d1ff03; /* 保持相同的紫色 */
+    color: #033eff; /* 保持相同的紫色 */
 }
 
 html[data-theme="light"] .signature {
@@ -362,4 +362,171 @@ html[data-theme="light"] .social-links a:hover {
 
 html[data-theme="light"] .avatar {
     border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* 修改移动端媒体查询部分 */
+@media (max-width: 768px) {
+    /* 隐藏视频背景 */
+    .video-background {
+        display: none;
+    }
+    
+    /* 移动端背景色 */
+    body {
+        background-color: var(--bg-color);
+        overflow: hidden; /* 防止页面滚动 */
+    }
+    
+    html[data-theme='light'] {
+        --bg-color: #f5f5f5;
+    }
+    
+    html[data-theme='dark'] {
+        --bg-color: #1a1a1a;
+    }
+    
+    /* 修改内容容器 */
+    .content {
+        height: 100vh;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 70px; /* 为底部主题切换按钮留出空间 */
+    }
+    
+    /* 修改主容器适配 */
+    .main-container {
+        width: 100%;
+        max-width: 100%;
+        height: 75vh; /* 设置为屏幕高度的3/4 */
+        margin: 0;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* 修改容器内容布局 */
+    .container-content {
+        position: relative;
+        height: 100%;
+        flex-direction: column;
+    }
+    
+    /* 隐藏图片容器 */
+    .image-container {
+        display: none;
+    }
+    
+    /* 调整个人信息容器 */
+    .profile-container {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        gap: 10px; /* 减小整体间距 */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* 使用空间分布 */
+    }
+    
+    /* 调整头部信息 */
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 10px; /* 减小底部间距 */
+    }
+    
+    .avatar {
+        margin-bottom: 8px; /* 减小头像下方间距 */
+    }
+    
+    /* 导航按钮调整 */
+    .nav-buttons {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px; /* 稍微减小按钮之间的间距 */
+        margin: 8px 0; /* 减小上下间距 */
+    }
+    
+    /* 社交链接调整 */
+    .social-links {
+        margin-top: 8px; /* 减小顶部间距 */
+        padding-top: 8px; /* 减小内部顶部间距 */
+        justify-content: center;
+    }
+    
+    /* 调整主题切换按钮位置 */
+    .theme-switch {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 8px 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+}
+
+/* 浅色主题下的移动端样式调整 */
+@media (max-width: 768px) {
+    html[data-theme="light"] .main-container {
+        background: rgba(255, 255, 255, 0.8);
+    }
+    
+    html[data-theme="light"] .theme-switch {
+        background: rgba(255, 255, 255, 0.9);
+    }
+    
+    html[data-theme="dark"] .main-container {
+        background: rgba(0, 0, 0, 0.3);
+    }
+    
+    html[data-theme="dark"] .theme-switch {
+        background: rgba(0, 0, 0, 0.6);
+    }
+}
+
+/* 更小屏幕的额外调整 */
+@media (max-width: 380px) {
+    .content {
+        padding: 0 15px;
+    }
+    
+    .main-container {
+        padding: 15px;
+    }
+    
+    .profile-container {
+        padding: 5px;
+    }
+    
+    .theme-switch {
+        padding: 5px 10px;
+    }
+    
+    .theme-btn {
+        padding: 5px 8px;
+    }
+    
+    .theme-btn .text {
+        display: none;
+    }
+    
+    .nav-buttons {
+        gap: 8px; /* 更小屏幕时进一步减小间距 */
+        margin: 6px 0;
+    }
+    
+    .nav-btn {
+        padding: 12px;
+    }
+    
+    .social-links {
+        margin-top: 6px;
+        padding-top: 6px;
+    }
 } 
