@@ -1,5 +1,22 @@
 // 确保视频加载完成后播放
 document.addEventListener('DOMContentLoaded', function() {
+    // 获取网站图标元素
+    const favicon = document.querySelector('link[rel="icon"]');
+    
+    // 设置图标URL
+    function setFavicon(isVisible) {
+        favicon.href = isVisible
+            ? "https://webcnstatic.yostar.net/ba_cn_web/prod/web/assets/avatar4.8656c817.png"
+            : "https://webcnstatic.yostar.net/ba_cn_web/prod/web/assets/avatar3.c9d108f1.png";
+    }
+    
+    // 监听页面可见性变化
+    document.addEventListener('visibilitychange', () => {
+        setFavicon(!document.hidden);
+    });
+    
+    // 初始设置图标
+    setFavicon(!document.hidden);
     const video = document.querySelector('video');
     
     // 视频加载错误处理
@@ -110,4 +127,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 在文档加载完成后执行
     handleMobileViewport();
-}); 
+});
