@@ -37,6 +37,7 @@
 
 ## 目录结构 
 
+```
 ├── index.html # 主页<br>
 ├── chat.html # AI聊天页面<br>
 ├── barcode.html # 条码生成器<br>
@@ -52,6 +53,7 @@
 │ ├── chat.js # AI聊天脚本<br>
 │ ├── barcode.js # 条码生成器脚本<br>
 │ └── sms.js # 短信生成器脚本<br>
+```
 
 ## 使用说明
 
@@ -62,7 +64,7 @@
 ## 联系方式
 
 - GitHub: [@wwcxin](https://github.com/wwcxin)
-- Email: hi@b23.run
+- Email: [hi@b23.run](mailto:hi@b23.run)
 - QQ: [点击添加](https://qm.qq.com/q/UZcoAr5e4a)
 - 哔哩哔哩: [个人空间](https://space.bilibili.com/193373978)
 
