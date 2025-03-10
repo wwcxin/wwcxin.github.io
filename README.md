@@ -38,21 +38,21 @@
 ## 目录结构 
 
 ```
-├── index.html # 主页<br>
-├── chat.html # AI聊天页面<br>
-├── barcode.html # 条码生成器<br>
-├── sms.html # 短信生成器<br>
-├── assets/<br>
-│ ├── css/ # 样式文件<br>
-│ │ ├── style.css # 主页样式<br>
-│ │ ├── chat.css # AI聊天样式<br>
-│ │ ├── barcode.css # 条码生成器样式<br>
-│ │ └── sms.css # 短信生成器样式<br>
-│ └── js/ # 脚本文件<br>
-│ ├── main.js # 主页脚本<br>
-│ ├── chat.js # AI聊天脚本<br>
-│ ├── barcode.js # 条码生成器脚本<br>
-│ └── sms.js # 短信生成器脚本<br>
+├── index.html # 主页
+├── chat.html # AI聊天页面
+├── barcode.html # 条码生成器
+├── sms.html # 短信生成器
+├── assets/
+│ ├── css/ # 样式文件
+│ │ ├── style.css # 主页样式
+│ │ ├── chat.css # AI聊天样式
+│ │ ├── barcode.css # 条码生成器样式
+│ │ └── sms.css # 短信生成器样式
+│ └── js/ # 脚本文件
+│ ├── main.js # 主页脚本
+│ ├── chat.js # AI聊天脚本
+│ ├── barcode.js # 条码生成器脚本
+│ └── sms.js # 短信生成器脚本
 ```
 
 ## 使用说明
