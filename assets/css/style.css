@@ -339,6 +339,79 @@ html[data-theme="light"] .image-container::after {
     font-size: 14px;
 }
 
+/* 联系页面按钮特定样式 */
+.phone-btn {
+    border-left: 4px solid #4CAF50;
+}
+
+.phone-btn:hover {
+    border-left-color: #45a049;
+}
+
+.email-btn {
+    border-left: 4px solid #2196F3;
+}
+
+.email-btn:hover {
+    border-left-color: #1976D2;
+}
+
+.qq-btn {
+    border-left: 4px solid #FF9800;
+}
+
+.qq-btn:hover {
+    border-left-color: #F57C00;
+}
+
+.github-btn {
+    border-left: 4px solid #9C27B0;
+}
+
+.github-btn:hover {
+    border-left-color: #7B1FA2;
+}
+
+/* 返回按钮样式 */
+.back-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.back-btn .icon {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* 浅色主题返回按钮 */
+html[data-theme="light"] .back-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="light"] .back-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
 /* 社交链接样式 */
 .social-links {
     display: flex;
@@ -428,19 +501,25 @@ html[data-theme="light"] .avatar {
     .main-container {
         width: 100%;
         max-width: 100%;
-        height: 75vh; /* 设置为屏幕高度的3/4 */
+        height: auto; /* 改为自适应高度 */
+        min-height: 60vh; /* 设置最小高度 */
         margin: 0;
         padding: 20px;
         background: rgba(255, 255, 255, 0.1);
         display: flex;
         flex-direction: column;
+        justify-content: flex-start; /* 改为从顶部开始，不要居中 */
     }
     
     /* 修改容器内容布局 */
     .container-content {
         position: relative;
-        height: 100%;
+        height: auto; /* 改为自适应高度 */
         flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* 改为从顶部开始，不要居中 */
+        padding-top: 20px; /* 给顶部一些间距 */
     }
     
     /* 隐藏图片容器 */
@@ -451,12 +530,11 @@ html[data-theme="light"] .avatar {
     /* 调整个人信息容器 */
     .profile-container {
         width: 100%;
-        height: 100%;
+        height: auto; /* 改为自适应高度 */
         padding: 10px;
-        gap: 10px; /* 减小整体间距 */
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* 使用空间分布 */
+        align-items: center; /* 居中对齐 */
     }
     
     /* 调整头部信息 */
@@ -464,18 +542,28 @@ html[data-theme="light"] .avatar {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        margin-bottom: 10px; /* 减小底部间距 */
+        margin-bottom: 20px; /* 与按钮的间距 */
+        width: 100%;
     }
     
     .avatar {
         margin-bottom: 8px; /* 减小头像下方间距 */
     }
     
-    /* 导航按钮调整 */
+    /* 导航按钮调整 - 完全独立于profile-container */
     .nav-buttons {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px; /* 稍微减小按钮之间的间距 */
-        margin: 8px 0; /* 减小上下间距 */
+        margin: 0; /* 移除上下间距，紧挨着header */
+        width: 100%; /* 确保宽度填满 */
+        max-height: 200px; /* 限制按钮区域最大高度 */
+        align-self: flex-start; /* 让按钮区域从顶部开始，不受profile-container影响 */
+    }
+    
+    /* 移动端按钮样式优化 */
+    .nav-btn {
+        padding: 12px 8px; /* 稍微减小按钮内边距 */
+        min-height: 80px; /* 设置最小高度 */
     }
     
     /* 社交链接调整 */
@@ -547,7 +635,7 @@ html[data-theme="light"] .avatar {
     
     .nav-buttons {
         gap: 8px; /* 更小屏幕时进一步减小间距 */
-        margin: 6px 0;
+        margin: 0; /* 保持与768px媒体查询一致 */
     }
     
     .nav-btn {

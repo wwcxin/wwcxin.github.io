@@ -17,16 +17,62 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 初始设置图标
     setFavicon(!document.hidden);
+    
+    // 移动端视频加载优化
     const video = document.querySelector('video');
+    const videoBackground = document.querySelector('.video-background');
     
-    // 视频加载错误处理
-    video.addEventListener('error', function(e) {
-        console.error('视频加载失败:', e);
-    });
+    // 检查是否为移动端且屏幕高度大于宽度
+    function shouldLoadVideo() {
+        const isMobile = window.innerWidth <= 768;
+        const isPortrait = window.innerHeight > window.innerWidth;
+        return !isMobile || (isMobile && isPortrait);
+    }
     
-    // 尝试播放视频
-    video.play().catch(function(error) {
-        console.log("视频自动播放失败:", error);
+    // 如果不需要加载视频，隐藏视频背景
+    if (!shouldLoadVideo()) {
+        if (videoBackground) {
+            videoBackground.style.display = 'none';
+        }
+        if (video) {
+            video.pause();
+            video.src = '';
+        }
+    } else {
+        // 视频加载错误处理
+        if (video) {
+            video.addEventListener('error', function(e) {
+                console.error('视频加载失败:', e);
+            });
+            
+            // 尝试播放视频
+            video.play().catch(function(error) {
+                console.log("视频自动播放失败:", error);
+            });
+        }
+    }
+    
+    // 监听屏幕方向变化
+    window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+            if (shouldLoadVideo()) {
+                if (videoBackground) {
+                    videoBackground.style.display = 'block';
+                }
+                if (video && video.src) {
+                    video.play().catch(function(error) {
+                        console.log("视频自动播放失败:", error);
+                    });
+                }
+            } else {
+                if (videoBackground) {
+                    videoBackground.style.display = 'none';
+                }
+                if (video) {
+                    video.pause();
+                }
+            }
+        }, 100);
     });
 
     // 随机图片数组
