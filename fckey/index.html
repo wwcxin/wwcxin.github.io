@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>动态密码生成器（对齐APP版）</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  body {
+    background: #f5f5f5;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .form-item {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+  }
+  input:focus {
+    outline: none;
+    border-color: #07c160;
+    box-shadow: 0 0 0 2px rgba(7, 193, 96, 0.1);
+  }
+  .btn-generate {
+    width: 100%;
+    padding: 14px;
+    background: #07c160;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .btn-generate:hover {
+    background: #06ae56;
+  }
+  .code-box {
+    margin-top: 32px;
+    text-align: center;
+    padding: 24px;
+    background: #f7f8fa;
+    border-radius: 12px;
+  }
+  .code-title {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  .code-value {
+    font-size: 40px;
+    font-weight: 700;
+    color: #07c160;
+    letter-spacing: 8px;
+    margin-bottom: 16px;
+  }
+  .code-tip {
+    font-size: 13px;
+    color: #999;
+  }
+  .code-time {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>动态密码生成器</h1>
+  <div class="form-item">
+    <label>FC编号</label>
+    <input id="fcInput" type="text" placeholder="请输入FC编号" value="FC5734373">
+  </div>
+  <div class="form-item">
+    <label>手机号码</label>
+    <input id="phoneInput" type="text" placeholder="请输入手机号码" value="15397275691">
+  </div>
+  <button class="btn-generate" id="generateBtn">生成动态密码</button>
+  <div class="code-box" id="codeBox">
+    <div class="code-title">当前有效动态密码</div>
+    <div class="code-value" id="codeDisplay">------</div>
+    <div class="code-time" id="timeDisplay">有效期：--:-- - --:--</div>
+    <div class="code-tip">密码每5分钟自动更新，与APP完全同步</div>
+  </div>
+</div>
+
+<script>
+// 🔐 固定密钥（和你Python代码完全一致，不可修改）
+const FIXED_KEY = "sjoi3x98wlkrj38x76Lzn";
+// ⏱️ 时间步长：5分钟 = 300秒（和APP完全一致）
+const TIME_STEP_SEC = 300;
+// 🔢 6位验证码模值 10^6
+const DIGITS_POWER_6 = 1000000;
+
+// 🔧 辅助函数：数字转8字节大端数组（完全对齐Python字节序）
+function intToBigEndianBytes(num) {
+  const bytes = new Uint8Array(8);
+  for (let i = 7; i >= 0; i--) {
+    bytes[i] = num & 0xFF;
+    num = num >>> 8;
+  }
+  return bytes;
+}
+
+// 🔧 辅助函数：字节数组转16进制字符串（小写，对齐Python）
+function bytesToHex(bytes) {
+  return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// 🔧 辅助函数：16进制字符串转字节数组
+function hexToBytes(hex) {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < hex.length; i += 2) {
+    bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+  }
+  return bytes;
+}
+
+// 🔐 HMAC-SHA1计算（完全对齐Python hmac库）
+async function hmacSha1(keyBytes, messageBytes) {
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    keyBytes,
+    { name: "HMAC", hash: "SHA-1" },
+    false,
+    ["sign"]
+  );
+  const signature = await crypto.subtle.sign("HMAC", cryptoKey, messageBytes);
+  return new Uint8Array(signature);
+}
+
+// 🎯 核心生成函数（1:1复刻你Python的_generate_code）
+async function generateCode(dataStr, counter) {
+  // 1. 计数器转16进制字符串，补齐16位（对齐Python zfill(16)）
+  const counterHex = counter.toString(16).padStart(16, '0');
+  // 2. 16进制转字节数组（对齐Python hex_to_bytes）
+  const counterBytes = hexToBytes(counterHex);
+  // 3. 计算HMAC：密钥是dataStr的字节，消息是counterBytes（完全对齐Python hmac_digest）
+  const dataBytes = new TextEncoder().encode(dataStr);
+  const hmacResult = await hmacSha1(dataBytes, counterBytes);
+  
+  // 4. 动态截断（完全对齐Python offset = hmac_result[-1] & 0x0f）
+  const offset = hmacResult[hmacResult.length - 1] & 0x0F;
+  // 5. 提取4字节组合成32位整数（完全对齐Python位运算）
+  const binary = (
+    ((hmacResult[offset] & 0x7F) << 24) |
+    ((hmacResult[offset + 1] & 0xFF) << 16) |
+    ((hmacResult[offset + 2] & 0xFF) << 8) |
+    (hmacResult[offset + 3] & 0xFF)
+  );
+  // 6. 取模得到6位数字，补齐前导0（对齐Python zfill(6)）
+  const otp = (binary % DIGITS_POWER_6).toString().padStart(6, '0');
+  return otp;
+}
+
+// ⏰ 获取当前时间对应的计数器（5分钟步长）
+function getCurrentCounter() {
+  const nowSec = Math.floor(Date.now() / 1000);
+  return Math.floor(nowSec / TIME_STEP_SEC);
+}
+
+// 🕒 计算当前密码的有效期时间
+function getValidTimeRange(counter) {
+  const startSec = counter * TIME_STEP_SEC;
+  const endSec = startSec + TIME_STEP_SEC;
+  const start = new Date(startSec * 1000);
+  const end = new Date(endSec * 1000);
+  
+  const pad = n => n.toString().padStart(2, '0');
+  const startStr = `${pad(start.getHours())}:${pad(start.getMinutes())}`;
+  const endStr = `${pad(end.getHours())}:${pad(end.getMinutes())}`;
+  return `${startStr} - ${endStr}`;
+}
+
+// 🎨 页面元素
+const fcInput = document.getElementById('fcInput');
+const phoneInput = document.getElementById('phoneInput');
+const generateBtn = document.getElementById('generateBtn');
+const codeBox = document.getElementById('codeBox');
+const codeDisplay = document.getElementById('codeDisplay');
+const timeDisplay = document.getElementById('timeDisplay');
+
+// 🔄 自动刷新定时器
+let refreshTimer = null;
+
+// 🚀 生成并更新密码
+async function updateCode() {
+  const fc = fcInput.value.trim();
+  const phone = phoneInput.value.trim();
+
+  if (!fc || !phone) {
+    alert("请输入完整的FC编号和手机号码！");
+    return;
+  }
+
+  // 拼接data：FC编号 + 手机号 + 固定密钥（完全对齐Python data参数）
+  const dataStr = fc + phone + FIXED_KEY;
+  // 获取当前计数器
+  const counter = getCurrentCounter();
+  // 生成验证码
+  const code = await generateCode(dataStr, counter);
+  
+  // 更新页面
+  codeDisplay.textContent = code;
+  timeDisplay.textContent = `有效期：${getValidTimeRange(counter)}`;
+  codeBox.style.display = "block";
+}
+
+// 🖱️ 点击生成按钮
+generateBtn.addEventListener('click', async () => {
+  await updateCode();
+  // 启动自动刷新（每300秒=5分钟刷新一次，和步长一致）
+  if (refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = setInterval(updateCode, TIME_STEP_SEC * 1000);
+});
+
+// ⌨️ 回车触发生成
+[fcInput, phoneInput].forEach(input => {
+  input.addEventListener('keydown', async (e) => {
+    if (e.key === 'Enter') {
+      await updateCode();
+      if (refreshTimer) clearInterval(refreshTimer);
+      refreshTimer = setInterval(updateCode, TIME_STEP_SEC * 1000);
+    }
+  });
+});
+</script>
+</body>
+</html>
