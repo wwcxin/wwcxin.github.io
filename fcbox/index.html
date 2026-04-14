@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="蜂巢生态软件下载中心 - 提供蜂巢核心、智能驱动及专业测试工具的最新版本APK下载。">
+    <title>蜂巢软件中心 | 官方下载</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #eef2f7 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        /* 装饰性背景元素 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, rgba(59, 130, 246, 0.02) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -15%;
+            right: -5%;
+            width: 55%;
+            height: 55%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, rgba(6, 182, 212, 0.02) 80%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 头部区域 */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e293b, #2d3e5a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero h1 i {
+            background: none;
+            background-clip: unset;
+            -webkit-background-clip: unset;
+            color: #3b82f6;
+            font-size: 2.4rem;
+        }
+
+        .hero .sub {
+            font-size: 1.1rem;
+            color: #4b5e77;
+            max-width: 580px;
+            margin: 0 auto;
+            font-weight: 400;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .hero-desc {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: #5b6e8c;
+        }
+
+        /* 卡片网格布局 - 自适应，方便增加内容 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(0px);
+            border-radius: 2rem;
+            padding: 1.8rem 1.6rem 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+            transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 45px -18px rgba(0, 0, 0, 0.2);
+            border-color: rgba(59, 130, 246, 0.3);
+            background: #ffffff;
+        }
+
+        /* 卡片图标区域 */
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(125deg, #eff6ff, #e0e9ff);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            color: #2563eb;
+            transition: all 0.2s;
+            box-shadow: 0 6px 12px -8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover .card-icon {
+            background: linear-gradient(125deg, #e6f0ff, #d9e4ff);
+            transform: scale(1.02);
+        }
+
+        .card h3 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+            color: #0f2b3d;
+        }
+
+        .card-desc {
+            color: #5b6e8c;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        .meta-info {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            background: #f8fafc;
+            padding: 0.6rem 1rem;
+            border-radius: 1.2rem;
+            font-size: 0.8rem;
+        }
+
+        .version {
+            font-weight: 600;
+            background: #eef2ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            color: #1e40af;
+            font-size: 0.75rem;
+            letter-spacing: 0.2px;
+        }
+
+        .file-badge {
+            color: #4b6b8f;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .file-badge i {
+            font-size: 0.7rem;
+            color: #5e8bc7;
+        }
+
+        /* 下载按钮 */
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(105deg, #1e3a8a, #2563eb);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.9rem 0;
+            border-radius: 3rem;
+            transition: all 0.25s ease;
+            font-size: 1rem;
+            letter-spacing: 0.3px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        .download-btn i {
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(105deg, #0f2b6d, #1d4ed8);
+            transform: scale(1.02);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.3);
+        }
+
+        .download-btn:hover i {
+            transform: translateY(2px);
+        }
+
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* 注脚区域 */
+        .footer {
+            text-align: center;
+            margin-top: 3.5rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(100, 116, 139, 0.2);
+            font-size: 0.8rem;
+            color: #62748c;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 增加内容指引提示（仅用于展示方便扩展） */
+        .add-hint {
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 2rem;
+            text-align: center;
+            padding: 0.7rem;
+            font-size: 0.75rem;
+            color: #4f6f9f;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .add-hint i {
+            font-size: 0.8rem;
+        }
+
+        /* 响应式细节 */
+        @media (max-width: 680px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero h1 i {
+                font-size: 1.9rem;
+            }
+
+            .cards-grid {
+                gap: 1.3rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .card h3 {
+                font-size: 1.5rem;
+            }
+
+            .download-btn {
+                padding: 0.8rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .meta-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #eef2f9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #b9cef0;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8fabd0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 头部内容 -->
+    <div class="hero">
+        <h1>
+            <i class="fas fa-cube"></i> 
+            蜂巢软件中心
+        </h1>
+        <div class="sub">稳定 · 高效 · 创新</div>
+        <div class="hero-desc">
+            精选官方应用，极速下载体验
+        </div>
+    </div>
+
+    <!-- 卡片网格：展示所有软件条目，方便后续增加卡片（只需复制 .card 结构并修改内容即可） -->
+    <div class="cards-grid">
+        
+        <!-- 蜂巢 卡片 -->
+        <div class="card">
+            <div class="card-icon">
+                <i class="fas fa-hive"></i>
+            </div>
+            <h3>蜂巢</h3>
+            <div class="card-desc">
+                核心服务引擎 · 提供基础框架与运行时环境，保障生态应用无缝协作。
+            </div>
+            <div class="meta-info">
+                <span class="version"><i class="fas fa-tag"></i> v1.334.2</span>
+                <span class="file-badge"><i class="fas fa-mobile-alt"></i> Android APK</span>
+                <span class="file-badge"><i class="far fa-calendar-alt"></i> 2025.03</span>
+            </div>
+            <a href="https://fcbox-beedance-prd-1251779293.file.myqcloud.com/apk/fcbox_core_v1.334.2.apk" 
+               class="download-btn" 
+               download 
+               rel="noopener noreferrer">
+                <i class="fas fa-download"></i> 立即下载
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 驱动 卡片 -->
+        <div class="card">
+            <div class="card-icon">
+                <i class="fas fa-microchip"></i>
+            </div>
+            <h3>智能驱动</h3>
+            <div class="card-desc">
+                外设管理与硬件驱动中心 · 智能识别，高效稳定控制各类设备模块。
+            </div>
+            <div class="meta-info">
+                <span class="version"><i class="fas fa-tag"></i> v1.98.0</span>
+                <span class="file-badge"><i class="fas fa-mobile-alt"></i> Android APK</span>
+                <span class="file-badge"><i class="far fa-calendar-alt"></i> 2025.02</span>
+            </div>
+            <a href="https://fchibox-1251779293.file.myqcloud.com/factory/standard-box/fcbox_driver_cabinet_v1.98.0.apk" 
+               class="download-btn" 
+               download 
+               rel="noopener noreferrer">
+                <i class="fas fa-download"></i> 立即下载
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 测试 卡片 -->
+        <div class="card">
+            <div class="card-icon">
+                <i class="fas fa-flask"></i>
+            </div>
+            <h3>专业测试</h3>
+            <div class="card-desc">
+                硬件调试与自动化测试工具集 · 专业级诊断，助力研发效率提升。
+            </div>
+            <div class="meta-info">
+                <span class="version"><i class="fas fa-tag"></i> v1.56.0</span>
+                <span class="file-badge"><i class="fas fa-mobile-alt"></i> Android APK</span>
+                <span class="file-badge"><i class="far fa-calendar-alt"></i> 2025.01</span>
+            </div>
+            <a href="https://fchibox-1251779293.file.myqcloud.com/factory/hitester/fcbox_tools_cabinet_v1.56.0.apk" 
+               class="download-btn" 
+               download 
+               rel="noopener noreferrer">
+                <i class="fas fa-download"></i> 立即下载
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- 
+            ========== 扩展说明 ==========
+            需要增加新软件时，只需在 .cards-grid 容器内复制上面任意一个 .card 结构，
+            修改标题、描述、版本号、图标class以及下载链接即可。
+            网格布局会自动适应，完美响应各种屏幕尺寸。
+        -->
+    </div>
+
+    <!-- 便捷扩展提示 (仅为设计参考，不影响使用) -->
+    <div style="display: flex; justify-content: center;">
+        <div class="add-hint">
+            <i class="fas fa-plus-circle"></i> 灵活扩展 · 复制卡片即可添加更多应用
+            <i class="fas fa-arrows-alt"></i>
+        </div>
+    </div>
+
+    <!-- 底部说明 -->
+    <div class="footer">
+        <p><i class="fas fa-shield-alt"></i> 官方正版 · 安全下载 · 所有APK均通过签名验证</p>
+        <p style="margin-top: 8px;">© 2025 蜂巢生态 | 提供稳定可靠的软件分发服务</p>
+        <p style="margin-top: 6px; font-size: 0.7rem;">
+            <i class="fas fa-sync-alt"></i> 建议使用 Chrome / Edge 浏览器下载，获得最佳体验
+        </p>
+    </div>
+</div>
+
+<!-- 额外微交互：控制台友好提示（可选） -->
+<script>
+    (function() {
+        // 优雅的下载统计记录（仅前端趣味，不影响功能）
+        const downloadBtns = document.querySelectorAll('.download-btn');
+        downloadBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // 获取对应卡片的应用名称
+                const card = this.closest('.card');
+                let appName = '';
+                if (card) {
+                    const titleElem = card.querySelector('h3');
+                    if (titleElem) appName = titleElem.innerText.trim();
+                }
+                // 可选控制台记录（不干扰用户，只用于体验增强）
+                console.log(`📥 下载触发: ${appName || '应用'}，链接已启动下载任务。`);
+                // 没有额外弹窗，保持干净体验，但可以添加简单的动态效果反馈（非阻塞）
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> 开始下载...';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 1200);
+            });
+        });
+
+        // 为所有下载链接增加可靠性提示: 若是由于浏览器阻止弹窗或自动下载问题，完全依赖链接默认行为，无需额外干预
+        console.log('蜂巢软件中心已加载 | 自适应布局就绪，支持扩展新卡片');
+    })();
+</script>
+</body>
+</html>
